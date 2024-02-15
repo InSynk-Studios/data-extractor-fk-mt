@@ -1,4 +1,5 @@
 import puppeteer from 'puppeteer';
+import chrome from 'chrome-aws-lambda';
 
 import express from 'express';
 const app = express();
@@ -8,7 +9,17 @@ const port = process.env.PORT || 4000;
 
 
 export async function getProductDetails(url) {
-  const browser = await puppeteer.launch({ headless: true });
+  const executablePath = await chrome.executablePath
+  const browser = await puppeteer.launch({ 
+    ignoreHTTPSErrors: true,
+    args: chrome.args,
+    defaultViewport: {
+      width: 1280,
+      height: 720
+    },
+    executablePath,
+    headless: chrome.headless,
+   });
   const page = await browser.newPage();
   await page.goto(url, { waitUntil: 'networkidle2' });
   const name = await page.$eval('.B_NuCI', el => (el).innerText);
