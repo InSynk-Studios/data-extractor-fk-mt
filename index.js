@@ -4,7 +4,7 @@ import express from 'express';
 const app = express();
 app.use(express.json())
 
-const port = 4000;
+const port = process.env.PORT || 4000;
 
 
 export async function getProductDetails(url) {
