@@ -1,6 +1,6 @@
 import puppeteer from 'puppeteer';
 
-async function getHTML(url: string) {
+async function getHTML(url) {
   const browser = await puppeteer.launch({ headless: true });
   const page = await browser.newPage();
   await page.goto(url, { waitUntil: 'networkidle2' });
@@ -9,22 +9,22 @@ async function getHTML(url: string) {
   return html;
 }
 
-export async function getProductDetails(url: string) {
+export async function getProductDetails(url) {
   const browser = await puppeteer.launch({ headless: true });
   const page = await browser.newPage();
   await page.goto(url, { waitUntil: 'networkidle2' });
-  const name = await page.$eval('.B_NuCI', el => (el as any).innerText);
-  const description = await page.$eval('._1mXcCf', el => (el as any).innerText);
+  const name = await page.$eval('.B_NuCI', el => (el).innerText);
+  const description = await page.$eval('._1mXcCf', el => (el).innerText);
   await browser.close();
   return { name, description };
 }
 
-async function getProductImages(url: string) {
+async function getProductImages(url) {
   const browser = await puppeteer.launch({ headless: true });
   const page = await browser.newPage();
   await page.goto(url, { waitUntil: 'networkidle2' });
-  const name = await page.$eval('.B_NuCI', el => (el as any).innerText);
-  const description = await page.$eval('._1mXcCf', el => (el as any).innerText);
+  const name = await page.$eval('.B_NuCI', el => (el).innerText);
+  const description = await page.$eval('._1mXcCf', el => (el).innerText);
   await browser.close();
   return { name, description };
 }

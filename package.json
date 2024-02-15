@@ -1,9 +1,9 @@
 {
   "name": "scraping",
-  "module": "index.ts",
   "type": "module",
-  "devDependencies": {
-    "@types/bun": "latest"
+  "scripts": {
+    "start": "node index",
+    "dev": "nodemon --exec index.js"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
