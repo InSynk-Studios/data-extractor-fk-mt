@@ -1,5 +1,6 @@
 import puppeteer from 'puppeteer';
 import chrome from 'chrome-aws-lambda';
+require("dotenv").config();
 
 import express from 'express';
 const app = express();
@@ -11,14 +12,16 @@ const port = process.env.PORT || 4000;
 export async function getProductDetails(url) {
   const executablePath = await chrome.executablePath
   const browser = await puppeteer.launch({ 
-    ignoreHTTPSErrors: true,
-    args: chrome.args,
-    defaultViewport: {
-      width: 1280,
-      height: 720
-    },
-    executablePath,
-    headless: chrome.headless,
+    args: [
+      "--disable-setuid-sandbox",
+      "--no-sandbox",
+      "--single-process",
+      "--no-zygote",
+    ],
+    executablePath:
+      process.env.NODE_ENV === "production"
+        ? process.env.PUPPETEER_EXECUTABLE_PATH
+        : puppeteer.executablePath(),
    });
   const page = await browser.newPage();
   await page.goto(url, { waitUntil: 'networkidle2' });
