@@ -12,7 +12,7 @@ const port = process.env.PORT || 4000;
 
 export async function getProductDetails(url) {
   const executablePath = await chrome.executablePath
-  const browser = await puppeteer.launch({ 
+  const browser = await puppeteer.launch({
     args: [
       "--disable-setuid-sandbox",
       "--no-sandbox",
@@ -23,9 +23,11 @@ export async function getProductDetails(url) {
       process.env.NODE_ENV === "production"
         ? process.env.PUPPETEER_EXECUTABLE_PATH
         : puppeteer.executablePath(),
-   });
+  });
   const page = await browser.newPage();
   await page.goto(url, { waitUntil: 'networkidle2' });
+  const html = await page.content();
+  console.log(html);
   const name = await page.$eval('.B_NuCI', el => (el).innerText);
   const description = await page.$eval('._1mXcCf', el => (el).innerText);
   await browser.close();
