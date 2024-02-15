@@ -1,6 +1,7 @@
 import puppeteer from 'puppeteer';
 import chrome from 'chrome-aws-lambda';
-require("dotenv").config();
+import dotenv from 'dotenv';
+dotenv.config();
 
 import express from 'express';
 const app = express();
